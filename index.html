@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh - CN">
+<html lang="zh-CN">
 
 <head>
-    <meta charset="UTF - 8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user - scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>生日快乐</title>
     <!-- 引入可爱风格的字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -16,50 +16,36 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('30.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            /* 修改为可爱浪漫的纯色背景 */
+            background-color: #FFC0CB; 
             font-family: 'Pacifico', cursive;
             position: relative;
             overflow: hidden;
         }
 
-        #main - container {
+        #main-container {
             display: none;
             width: 100%;
             max-width: 1200px;
             flex-wrap: wrap;
             justify-content: center;
-            z - index: 2;
+            z-index: 2;
             margin-top: 20px; /* 增加按钮和照片之间的间距 */
         }
 
-        #gallery {
-            width: 100%;
+        /* 修改为 image-container 样式 */
+       .image-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 20px;
         }
 
-       .photo {
-            width: calc(50% - 12px);
-            height: 180px;
+       .image-container img {
+            max-width: 200px;
+            max-height: 200px;
             object-fit: cover;
-            margin: 6px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
             border-radius: 10px;
-            opacity: 0;
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-
-       .photo:hover {
-            transform: scale(1.2) translate(-50%, -50%);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z - index: 3;
         }
 
         /* 星星动画 */
@@ -70,7 +56,7 @@
             background: white;
             border-radius: 50%;
             animation: twinkle 3s infinite;
-            z - index: 1;
+            z-index: 1;
         }
 
         @keyframes twinkle {
@@ -96,7 +82,7 @@
             animation: meteorFall 3s linear infinite;
             transform-origin: left center;
             transform: rotate(-45deg);
-            z - index: 1;
+            z-index: 1;
         }
 
         @keyframes meteorFall {
@@ -123,7 +109,7 @@
             background: transparent;
             border-radius: 50%;
             box-shadow: 18px 18px 0 0 white;
-            z - index: 1;
+            z-index: 1;
         }
 
         /* 祝福语样式 */
@@ -133,7 +119,7 @@
             color: white;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             opacity: 0.3;
-            z - index: 1;
+            z-index: 1;
         }
 
         /* 按钮样式 */
@@ -147,21 +133,17 @@
             font-family: 'Pacifico', cursive;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            z - index: 2; /* 确保按钮在其他元素之上 */
+            z-index: 2; /* 确保按钮在其他元素之上 */
         }
 
         #myPhotosButton:hover {
             background-color: rgba(255, 255, 255, 1);
         }
 
-        @media (max - width: 430px) {
-           .photo {
-                width: calc(50% - 10px);
-                height: 160px;
-                margin: 5px;
-            }
-           .photo:hover {
-                transform: scale(1.2) translate(-50%, -50%);
+        @media (max-width: 430px) {
+           .image-container img {
+                max-width: 160px;
+                max-height: 160px;
             }
            .wish {
                 font-size: 2em;
@@ -183,8 +165,9 @@
 
 <body>
     <button id="myPhotosButton">我的照片</button>
-    <div id="main - container">
-        <div id="gallery">
+    <div id="main-container">
+        <!-- 修改为 image-container -->
+        <div class="image-container">
             <!-- 占位用，后续通过 JavaScript 动态插入图片 -->
         </div>
     </div>
@@ -214,8 +197,9 @@
             document.body.appendChild(meteor);
         }
 
-        const mainContainer = document.getElementById('main - container');
-        const gallery = document.getElementById('gallery');
+        const mainContainer = document.getElementById('main-container');
+        // 修改为获取 image-container
+        const imageContainer = document.querySelector('.image-container');
         const birthdaySong = document.getElementById('birthdaySong');
         const myPhotosButton = document.getElementById('myPhotosButton');
 
@@ -233,14 +217,13 @@
 
         // 按钮点击事件
         myPhotosButton.addEventListener('click', function () {
-            gallery.innerHTML = '';
+            imageContainer.innerHTML = '';
             const shuffledPhotoNumbers = shuffleArray(photoNumbers).slice(0, 2);
             shuffledPhotoNumbers.forEach((index, delayIndex) => {
                 const img = document.createElement('img');
-                img.classList.add('photo');
                 img.src = `${index}.jpg`;
                 img.alt = `Photo ${index}`;
-                gallery.appendChild(img);
+                imageContainer.appendChild(img);
                 setTimeout(() => {
                     img.style.opacity = 1;
                 }, delayIndex * 1000);
