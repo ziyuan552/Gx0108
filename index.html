@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh - CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF - 8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user - scalable=no">
     <title>生日快乐</title>
     <!-- 引入可爱风格的字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -12,43 +12,43 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify - content: center;
+            align - items: center;
             height: 100vh;
             /* 使用 30.jpg 作为背景图片 */
-            background-image: url('30.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background - image: url('30.jpg');
+            background - size: cover;
+            background - position: center;
+            background - repeat: no - repeat;
             /* 使用可爱风格的字体 */
-            font-family: 'Pacifico', cursive;
+            font - family: 'Pacifico', cursive;
             position: relative;
             overflow: hidden;
         }
 
-        #main-container {
+        #main - container {
             display: none;
             width: 100%;
-            max-width: 1200px;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            z-index: 2;
+            max - width: 1200px;
+            flex - wrap: wrap;
+            justify - content: space - between;
+            z - index: 2;
         }
 
         #gallery {
             width: 100%;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex - wrap: wrap;
+            justify - content: space - between;
         }
 
       .photo {
-            width: calc((100% - 5 * 20px) / 6);
-            height: 200px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+            width: calc((100% - 5 * 12px) / 6);
+            height: 180px;
+            object - fit: cover;
+            margin - bottom: 12px;
+            box - shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            border - radius: 10px;
             transition: transform 0.3s ease;
             opacity: 0;
         }
@@ -63,9 +63,9 @@
             width: 2px;
             height: 2px;
             background: white;
-            border-radius: 50%;
+            border - radius: 50%;
             animation: twinkle 3s infinite;
-            z-index: 1;
+            z - index: 1;
         }
 
         @keyframes twinkle {
@@ -87,11 +87,11 @@
             position: absolute;
             width: 100px;
             height: 2px;
-            background: linear-gradient(to right, white, transparent);
+            background: linear - gradient(to right, white, transparent);
             animation: meteorFall 3s linear infinite;
-            transform-origin: left center;
+            transform - origin: left center;
             transform: rotate(-45deg);
-            z-index: 1;
+            z - index: 1;
         }
 
         @keyframes meteorFall {
@@ -111,30 +111,48 @@
         /* 半月样式 */
       .moon {
             position: absolute;
-            top: 50px;
-            right: 50px;
-            width: 100px;
-            height: 100px;
+            top: 60px;
+            right: 60px;
+            width: 120px;
+            height: 120px;
             background: transparent;
-            border-radius: 50%;
-            box-shadow: 15px 15px 0 0 white;
-            z-index: 1;
+            border - radius: 50%;
+            box - shadow: 18px 18px 0 0 white;
+            z - index: 1;
         }
 
         /* 祝福语样式 */
       .wish {
             position: absolute;
-            font-size: 2em;
+            font - size: 2.2em;
             color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            text - shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             opacity: 0.3;
-            z-index: 1;
+            z - index: 1;
+        }
+
+        @media (max - width: 430px) {
+          .photo {
+                width: calc((100% - 5 * 10px) / 5);
+                height: 160px;
+                margin - bottom: 10px;
+            }
+          .wish {
+                font - size: 2em;
+            }
+          .moon {
+                width: 100px;
+                height: 100px;
+                top: 50px;
+                right: 50px;
+                box - shadow: 15px 15px 0 0 white;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div id="main-container">
+    <div id="main - container">
         <div id="gallery">
             <!-- 占位用，后续通过 JavaScript 动态插入图片 -->
         </div>
@@ -165,7 +183,7 @@
             document.body.appendChild(meteor);
         }
 
-        const mainContainer = document.getElementById('main-container');
+        const mainContainer = document.getElementById('main - container');
         const gallery = document.getElementById('gallery');
         const birthdaySong = document.getElementById('birthdaySong');
 
