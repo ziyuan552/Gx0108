@@ -19,9 +19,7 @@
         }
 
         button {
-            /* 内边距放大两倍 */
             padding: 20px 40px;
-            /* 字体大小放大两倍 */
             font-size: 20px;
             background-color: #007BFF;
             color: white;
@@ -32,16 +30,21 @@
 
         #photoGallery {
             display: none;
-            /* 上边距放大两倍 */
             margin-top: 32px;
         }
 
-        #photoGallery img {
-            /* 图片宽度放大两倍 */
-            width: 360px;
-            height: auto;
-            /* 图片外边距放大两倍 */
-            margin: 16px;
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .image-container img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -50,15 +53,17 @@
     <h1>生日快乐</h1>
     <button onclick="toggleGallery()">显示我的图库</button>
     <div id="photoGallery">
-        <img src="1.jpg" alt="照片1">
-        <img src="2.jpg" alt="照片2">
+        <div class="image-container">
+            <img src="1.jpg" alt="照片1">
+            <img src="2.jpg" alt="照片2">
+        </div>
     </div>
 
     <script>
         function toggleGallery() {
             var gallery = document.getElementById('photoGallery');
             if (gallery.style.display === 'none') {
-                gallery.style.display = 'flex';
+                gallery.style.display = 'block';
             } else {
                 gallery.style.display = 'none';
             }
