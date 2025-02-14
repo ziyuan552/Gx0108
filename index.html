@@ -1,72 +1,266 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh - CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF - 8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user - scalable=no">
     <title>生日快乐</title>
+    <!-- 引入可爱风格的字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-size: 25px;
-            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
+            background-image: url('30.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Pacifico', cursive;
+            position: relative;
+            overflow: hidden;
         }
 
-        button {
-            padding: 20px 40px;
-            font-size: 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #photoGallery {
+        #main - container {
             display: none;
-            margin-top: 32px;
+            width: 100%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            justify-content: center;
+            z - index: 2;
+            margin-top: 20px; /* 增加按钮和照片之间的间距 */
         }
 
-        .image-container {
+        #gallery {
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
         }
 
-        .image-container img {
-            max-width: 200px;
-            max-height: 200px;
+       .photo {
+            width: calc(50% - 12px);
+            height: 180px;
             object-fit: cover;
+            margin: 6px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
             border-radius: 10px;
+            opacity: 0;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+       .photo:hover {
+            transform: scale(1.2) translate(-50%, -50%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z - index: 3;
+        }
+
+        /* 星星动画 */
+       .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+            z - index: 1;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* 流星动画 */
+       .meteor {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, white, transparent);
+            animation: meteorFall 3s linear infinite;
+            transform-origin: left center;
+            transform: rotate(-45deg);
+            z - index: 1;
+        }
+
+        @keyframes meteorFall {
+            0% {
+                top: -10px;
+                left: 100vw;
+                opacity: 1;
+            }
+
+            100% {
+                top: 100vh;
+                left: -10px;
+                opacity: 0;
+            }
+        }
+
+        /* 半月样式 */
+       .moon {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            width: 120px;
+            height: 120px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: 18px 18px 0 0 white;
+            z - index: 1;
+        }
+
+        /* 祝福语样式 */
+       .wish {
+            position: absolute;
+            font-size: 2.2em;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0.3;
+            z - index: 1;
+        }
+
+        /* 按钮样式 */
+        #myPhotosButton {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1.2em;
+            font-family: 'Pacifico', cursive;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z - index: 2; /* 确保按钮在其他元素之上 */
+        }
+
+        #myPhotosButton:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        @media (max - width: 430px) {
+           .photo {
+                width: calc(50% - 10px);
+                height: 160px;
+                margin: 5px;
+            }
+           .photo:hover {
+                transform: scale(1.2) translate(-50%, -50%);
+            }
+           .wish {
+                font-size: 2em;
+            }
+           .moon {
+                width: 100px;
+                height: 100px;
+                top: 50px;
+                right: 50px;
+                box-shadow: 15px 15px 0 0 white;
+            }
+            #myPhotosButton {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>生日快乐</h1>
-    <button onclick="toggleGallery()">显示我的图库</button>
-    <div id="photoGallery">
-        <div class="image-container">
-            <img src="1.jpg" alt="照片1">
-            <img src="2.jpg" alt="照片2">
+    <button id="myPhotosButton">我的照片</button>
+    <div id="main - container">
+        <div id="gallery">
+            <!-- 占位用，后续通过 JavaScript 动态插入图片 -->
         </div>
     </div>
+    <div class="moon"></div>
+    <!-- 修改音频元素的 src 为 28.mp3 -->
+    <audio id="birthdaySong" src="28.mp3"></audio>
 
+    <!-- 生成星星和流星特效 -->
     <script>
-        function toggleGallery() {
-            var gallery = document.getElementById('photoGallery');
-            if (gallery.style.display === 'none') {
-                gallery.style.display = 'block';
-            } else {
-                gallery.style.display = 'none';
+        // 生成更多星星
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(star);
+        }
+
+        // 生成更稀散的流星
+        for (let i = 0; i < 20; i++) {
+            const meteor = document.createElement('div');
+            meteor.classList.add('meteor');
+            meteor.style.top = Math.random() * 100 + '%';
+            meteor.style.left = '100%';
+            meteor.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(meteor);
+        }
+
+        const mainContainer = document.getElementById('main - container');
+        const gallery = document.getElementById('gallery');
+        const birthdaySong = document.getElementById('birthdaySong');
+        const myPhotosButton = document.getElementById('myPhotosButton');
+
+        // 定义照片编号数组
+        const photoNumbers = Array.from({ length: 24 }, (_, i) => i + 1);
+
+        // 随机化照片编号数组
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
+        }
+
+        // 按钮点击事件
+        myPhotosButton.addEventListener('click', function () {
+            gallery.innerHTML = '';
+            const shuffledPhotoNumbers = shuffleArray(photoNumbers).slice(0, 2);
+            shuffledPhotoNumbers.forEach((index, delayIndex) => {
+                const img = document.createElement('img');
+                img.classList.add('photo');
+                img.src = `${index}.jpg`;
+                img.alt = `Photo ${index}`;
+                gallery.appendChild(img);
+                setTimeout(() => {
+                    img.style.opacity = 1;
+                }, delayIndex * 1000);
+            });
+            mainContainer.style.display = 'flex';
+        });
+
+        // 页面加载完成后播放音乐
+        window.addEventListener('load', function () {
+            birthdaySong.play();
+        });
+
+        // 满屏幕显示祝福语
+        for (let i = 0; i < 30; i++) {
+            const wishElement = document.createElement('div');
+            wishElement.classList.add('wish');
+            wishElement.textContent = ['天天开心', '美美哒', '一帆风顺', '平平安安', '事事顺心如意'][Math.floor(Math.random() * 5)];
+            wishElement.style.left = Math.random() * 100 + '%';
+            wishElement.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(wishElement);
         }
     </script>
 </body>
