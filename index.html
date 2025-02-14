@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #FFC0CB;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 8em;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+
+        h1:hover {
+            transform: scale(1.1);
+        }
+
+        #main-container {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            z-index: 2;
+        }
+
+        #gallery {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+       .photo {
+            width: calc((100% - 5 * 20px) / 6);
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            opacity: 0;
+        }
+
+       .photo:hover {
+            transform: scale(1.05);
+        }
+
+        /* 星星动画 */
+       .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* 流星动画 */
+       .meteor {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, white, transparent);
+            animation: meteorFall 3s linear infinite;
+            transform-origin: left center;
+            z-index: 1;
+        }
+
+        @keyframes meteorFall {
+            0% {
+                transform: rotate(-45deg) translateX(100vw);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(-45deg) translateX(-100vw);
+                opacity: 0;
+            }
+        }
+
+        /* 半月样式 */
+       .moon {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            background: transparent;
+            border-radius: 50%;
+            box-shadow: 15px 15px 0 0 white;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="birthdayText">生日快乐</h1>
+    <div id="main-container">
+        <div id="gallery">
+            <!-- 占位用，后续通过 JavaScript 动态插入图片 -->
+        </div>
+    </div>
+    <div class="moon"></div>
+
+    <!-- 生成星星和流星特效 -->
+    <script>
+        // 生成更多星星
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(star);
+        }
+
+        // 生成更多流星
+        for (let i = 0; i < 50; i++) {
+            const meteor = document.createElement('div');
+            meteor.classList.add('meteor');
+            meteor.style.top = Math.random() * 100 + '%';
+            meteor.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(meteor);
+        }
+    </script>
+
+    <script>
+        const birthdayText = document.getElementById('birthdayText');
+        const mainContainer = document.getElementById('main-container');
+        const gallery = document.getElementById('gallery');
+
+        // 定义指定的照片顺序
+        const customOrder = [1, 8, 12, 23, 11, 10, 2, 6, 15, 16, 17, 18, 13, 3, 4, 21, 22, 9];
+
+        // 生成剩余按顺序排列的照片编号
+        const remainingOrder = [];
+        for (let i = 1; i <= 24; i++) {
+            if (!customOrder.includes(i)) {
+                remainingOrder.push(i);
+            }
+        }
+
+        // 合并自定义顺序和剩余顺序
+        const finalOrder = [...customOrder, ...remainingOrder];
+
+        birthdayText.addEventListener('click', () => {
+            birthdayText.style.display = 'none';
+            mainContainer.style.display = 'flex';
+
+            // 根据最终顺序插入图片
+            finalOrder.forEach((index, delayIndex) => {
+                const img = document.createElement('img');
+                img.classList.add('photo');
+                img.src = `${index}.jpg`;
+                img.alt = `Photo ${index}`;
+                gallery.appendChild(img);
+
+                setTimeout(() => {
+                    img.style.opacity = 1;
+                }, delayIndex * 500);
+            });
+        });
+    </script>
+</body>
+
+</html>
