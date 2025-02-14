@@ -31,7 +31,7 @@
             width: 100%;
             max - width: 1200px;
             flex - wrap: wrap;
-            justify - content: space - between;
+            justify - content: center;
             z - index: 2;
         }
 
@@ -39,11 +39,11 @@
             width: 100%;
             display: flex;
             flex - wrap: wrap;
-            justify - content: space - between;
+            justify - content: center;
         }
 
-      .photo {
-            width: calc((100% - 5 * 12px) / 6);
+     .photo {
+            width: calc((100% - 1 * 12px) / 2);
             height: 180px;
             object - fit: cover;
             margin - bottom: 12px;
@@ -53,12 +53,12 @@
             opacity: 0;
         }
 
-      .photo:hover {
+     .photo:hover {
             transform: scale(1.05);
         }
 
         /* 星星动画 */
-      .star {
+     .star {
             position: absolute;
             width: 2px;
             height: 2px;
@@ -83,7 +83,7 @@
         }
 
         /* 流星动画 */
-      .meteor {
+     .meteor {
             position: absolute;
             width: 100px;
             height: 2px;
@@ -109,7 +109,7 @@
         }
 
         /* 半月样式 */
-      .moon {
+     .moon {
             position: absolute;
             top: 60px;
             right: 60px;
@@ -122,7 +122,7 @@
         }
 
         /* 祝福语样式 */
-      .wish {
+     .wish {
             position: absolute;
             font - size: 2.2em;
             color: white;
@@ -132,15 +132,15 @@
         }
 
         @media (max - width: 430px) {
-          .photo {
-                width: calc((100% - 5 * 10px) / 5);
+         .photo {
+                width: calc((100% - 1 * 10px) / 2);
                 height: 160px;
                 margin - bottom: 10px;
             }
-          .wish {
+         .wish {
                 font - size: 2em;
             }
-          .moon {
+         .moon {
                 width: 100px;
                 height: 100px;
                 top: 50px;
@@ -187,19 +187,19 @@
         const gallery = document.getElementById('gallery');
         const birthdaySong = document.getElementById('birthdaySong');
 
-        // 定义指定的照片顺序
-        const customOrder = [1, 8, 12, 23, 11, 10, 2, 6, 15, 16, 17, 18, 13, 3, 4, 21, 22, 14];
+        // 定义照片编号数组
+        const photoNumbers = Array.from({ length: 24 }, (_, i) => i + 1);
 
-        // 生成剩余按顺序排列的照片编号
-        const remainingOrder = [];
-        for (let i = 1; i <= 24; i++) {
-            if (!customOrder.includes(i)) {
-                remainingOrder.push(i);
+        // 随机化照片编号数组
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
+            return array;
         }
 
-        // 合并自定义顺序和剩余顺序
-        const finalOrder = [...customOrder,...remainingOrder];
+        const shuffledPhotoNumbers = shuffleArray(photoNumbers).slice(0, 6);
 
         const wishes = [
             '天天开心',
@@ -230,8 +230,8 @@
                 document.body.appendChild(wishElement);
             }
 
-            // 根据最终顺序插入图片，照片显示速度改为 1s 一张
-            finalOrder.forEach((index, delayIndex) => {
+            // 根据随机顺序插入图片，照片显示速度改为 1s 一张
+            shuffledPhotoNumbers.forEach((index, delayIndex) => {
                 const img = document.createElement('img');
                 img.classList.add('photo');
                 img.src = `${index}.jpg`;
