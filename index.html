@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>生日快乐</title>
+    <!-- 引入可爱风格的字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -13,23 +15,15 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #FFC0CB;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 使用 30.jpg 作为背景图片 */
+            background-image: url('30.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            /* 使用可爱风格的字体 */
+            font-family: 'Pacifico', cursive;
             position: relative;
             overflow: hidden;
-        }
-
-        h1 {
-            font-size: 8em;
-            color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            z-index: 2;
-        }
-
-        h1:hover {
-            transform: scale(1.1);
         }
 
         #main-container {
@@ -48,7 +42,7 @@
             justify-content: space-between;
         }
 
-       .photo {
+      .photo {
             width: calc((100% - 5 * 20px) / 6);
             height: 200px;
             object-fit: cover;
@@ -59,12 +53,12 @@
             opacity: 0;
         }
 
-       .photo:hover {
+      .photo:hover {
             transform: scale(1.05);
         }
 
         /* 星星动画 */
-       .star {
+      .star {
             position: absolute;
             width: 2px;
             height: 2px;
@@ -89,30 +83,33 @@
         }
 
         /* 流星动画 */
-       .meteor {
+      .meteor {
             position: absolute;
             width: 100px;
             height: 2px;
             background: linear-gradient(to right, white, transparent);
             animation: meteorFall 3s linear infinite;
             transform-origin: left center;
+            transform: rotate(-45deg);
             z-index: 1;
         }
 
         @keyframes meteorFall {
             0% {
-                transform: rotate(-45deg) translateX(100vw);
+                top: -10px;
+                left: 100vw;
                 opacity: 1;
             }
 
             100% {
-                transform: rotate(-45deg) translateX(-100vw);
+                top: 100vh;
+                left: -10px;
                 opacity: 0;
             }
         }
 
         /* 半月样式 */
-       .moon {
+      .moon {
             position: absolute;
             top: 50px;
             right: 50px;
@@ -123,17 +120,28 @@
             box-shadow: 15px 15px 0 0 white;
             z-index: 1;
         }
+
+        /* 祝福语样式 */
+      .wish {
+            position: absolute;
+            font-size: 2em;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            opacity: 0.3;
+            z-index: 1;
+        }
     </style>
 </head>
 
 <body>
-    <h1 id="birthdayText">生日快乐</h1>
     <div id="main-container">
         <div id="gallery">
             <!-- 占位用，后续通过 JavaScript 动态插入图片 -->
         </div>
     </div>
     <div class="moon"></div>
+    <!-- 修改音频元素的 src 为 28.mp3 -->
+    <audio id="birthdaySong" src="28.mp3"></audio>
 
     <!-- 生成星星和流星特效 -->
     <script>
@@ -143,24 +151,23 @@
             star.classList.add('star');
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDelay = Math.random() * 3 +'s';
             document.body.appendChild(star);
         }
 
-        // 生成更多流星
-        for (let i = 0; i < 50; i++) {
+        // 生成更稀散的流星
+        for (let i = 0; i < 20; i++) {
             const meteor = document.createElement('div');
             meteor.classList.add('meteor');
             meteor.style.top = Math.random() * 100 + '%';
-            meteor.style.animationDelay = Math.random() * 5 + 's';
+            meteor.style.left = '100%';
+            meteor.style.animationDelay = Math.random() * 5 +'s';
             document.body.appendChild(meteor);
         }
-    </script>
 
-    <script>
-        const birthdayText = document.getElementById('birthdayText');
         const mainContainer = document.getElementById('main-container');
         const gallery = document.getElementById('gallery');
+        const birthdaySong = document.getElementById('birthdaySong');
 
         // 定义指定的照片顺序
         const customOrder = [1, 8, 12, 23, 11, 10, 2, 6, 15, 16, 17, 18, 13, 3, 4, 21, 22, 14];
@@ -174,13 +181,38 @@
         }
 
         // 合并自定义顺序和剩余顺序
-        const finalOrder = [...customOrder, ...remainingOrder];
+        const finalOrder = [...customOrder,...remainingOrder];
 
-        birthdayText.addEventListener('click', () => {
-            birthdayText.style.display = 'none';
+        const wishes = [
+            '天天开心',
+            '美美哒',
+            '一帆风顺',
+            '平平安安',
+            '事事顺心如意'
+        ];
+
+        let photoCount = 0;
+
+        // 页面加载完成后播放音乐
+        window.addEventListener('load', function () {
+            birthdaySong.play();
+        });
+
+        // 3s 后开始显示照片
+        setTimeout(() => {
             mainContainer.style.display = 'flex';
 
-            // 根据最终顺序插入图片
+            // 满屏幕显示祝福语
+            for (let i = 0; i < 30; i++) {
+                const wishElement = document.createElement('div');
+                wishElement.classList.add('wish');
+                wishElement.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+                wishElement.style.left = Math.random() * 100 + '%';
+                wishElement.style.top = Math.random() * 100 + '%';
+                document.body.appendChild(wishElement);
+            }
+
+            // 根据最终顺序插入图片，照片显示速度改为 1s 一张
             finalOrder.forEach((index, delayIndex) => {
                 const img = document.createElement('img');
                 img.classList.add('photo');
@@ -190,9 +222,10 @@
 
                 setTimeout(() => {
                     img.style.opacity = 1;
-                }, delayIndex * 500);
+                    photoCount++;
+                }, delayIndex * 1000);
             });
-        });
+        }, 3000);
     </script>
 </body>
 
